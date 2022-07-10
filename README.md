@@ -1,1 +1,2 @@
 # Projects
+These are some projects I'm working on to practice working with data. I plan to use this data to graph, machine/deep learn, sanitize, and for any other useful data manipulation techniques I learn along the way.
