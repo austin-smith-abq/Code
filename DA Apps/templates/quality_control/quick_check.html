@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<header>
+    <h1>{% block title %} Quick Check {% endblock %}</h1>
+</header>
+<div class="pt-4">
+    <form id="new_user" method="POST">
+        {{ form.csrf_token }}
+        <div class="row form-group">
+            <div class="col">
+                {{ wtf.form_field(form.url, class='form-control') }}
+            </div>
+            <div class="form-group col-md-3 align-self-end">
+                {{ form.submit(class_="btn btn-info form-control") }}
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+{% endblock %}

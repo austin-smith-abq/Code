@@ -28,3 +28,7 @@ class UserForm(FlaskForm):
     submit = SubmitField('Submit')
     deactivate = SubmitField('Deactivate')
 
+class QuickCheckForm(FlaskForm):
+    url = StringField('Sheet URL', validators=[DataRequired()])
+    submit = SubmitField('submit')
+
