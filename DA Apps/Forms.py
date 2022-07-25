@@ -10,6 +10,19 @@ class DocumentForm(FlaskForm):
     case_number = StringField('Enter a case number', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+class ContactForm(FlaskForm):
+    agencies = ["Albuquerque Police Department", "Bernalillo County Sheriff's", "New Mexico State Police"]
+    first_name = StringField('First name', validators=[DataRequired()])
+    last_name = StringField('Last name', validators=[DataRequired()])
+    agency = SelectField('Agency', choices=agencies, validators=[DataRequired()])
+    badge_id = StringField('Badge ID', validators=[DataRequired()])
+    title = StringField('Title')
+    primary_phone = StringField('Primary phone')
+    cell_phone = StringField('Cell phone')
+    email = StringField('Email')
+
+    submit = SubmitField('Submit')
+
 class UserSearchForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     search = SubmitField('Search')

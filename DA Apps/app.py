@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect
-from Forms import DocumentForm, UserForm, UserSearchForm, GoogleSheetForm
-from Models import User
+from Forms import DocumentForm, UserForm, UserSearchForm, ContactForm, GoogleSheetForm
+from Models import User, Contact
 from flask_bootstrap import Bootstrap
 from database import get_email_autocomplete, search_user_database
 
@@ -25,6 +25,36 @@ def create_document():
 
     return render_template(
         "document_generation/create_document.html", active="create_document", form=form
+    )
+@app.route("/new_contact", methods=["GET", "POST"])
+def new_contact():
+    form = ContactForm()
+    if form.validate_on_submit():
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+        agency = form.agency.data
+        badge_id = form.badge_id.data
+        title = form.title.data
+        primary_phone = form.primary_phone.data
+        cell_phone = form.cell_phone.data
+        email = form.email.data
+
+        contact = Contact(
+            first_name,
+            last_name,
+            agency,
+            badge_id,
+            title,
+            primary_phone,
+            cell_phone,
+            email,
+        )
+        contact.add()
+
+        return redirect("/new_contact")
+
+    return render_template(
+        "contacts/new_contact.html", active="new_contact", form=form
     )
 
 

@@ -31,3 +31,29 @@ class User:
             "active": True,
         }
         database.add(self.database, values)
+
+@dataclass
+class Contact:
+    first_name: str
+    last_name: str
+    agency: str
+    badge_id: str
+    title: str
+    primary_phone: str
+    cell_phone: str
+    email: str
+    database: str = "contacts"
+
+    def add(self):
+        values = {
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "agency": self.agency,
+            "badge_id": self.badge_id,
+            "title": self.title,
+            "primary_phone": self.primary_phone,
+            "cell_phone": self.cell_phone,
+            "email": self.email,
+            "active": True,
+        }
+        database.add(self.database, values)
