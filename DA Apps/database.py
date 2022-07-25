@@ -18,7 +18,7 @@ def get_email_autocomplete():
     emails = {}
     conn = engine()
     metadata = MetaData(bind=conn)
-    target_table = Table('employees', metadata, autoload=True)
+    target_table = Table('users', metadata, autoload=True)
     query = select([target_table.columns.email])
     result = conn.execute(query).fetchall()
     for row in result:
@@ -26,16 +26,18 @@ def get_email_autocomplete():
             emails[row[0]] = row[0]
     return emails
 
-def search_employee_database(email):
+def search_user_database(email):
     conn = engine()
     metadata = MetaData(bind=conn)
-    target_table = Table('employees', metadata, autoload=True)
+    target_table = Table('users', metadata, autoload=True)
     query = select([
         target_table.columns.first_name,
         target_table.columns.last_name,
-        target_table.columns.employee_id,
+        target_table.columns.user_type,
+        target_table.columns.user_id,
         target_table.columns.division,
         target_table.columns.title,
+        target_table.columns.supervisor
         ]).where(target_table.columns.email == email)
     result = conn.execute(query).fetchall()
     for row in result:

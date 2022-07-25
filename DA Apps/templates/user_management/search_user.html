@@ -2,10 +2,10 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 <header>
-    <h1>{% block title %} Search Employee {% endblock %}</h1>
+    <h1>{% block title %} Search User {% endblock %}</h1>
 </header>
 <div class="pt-4">
-    <form id="search_employee" method="POST">
+    <form id="search_user" method="POST">
         {{ form.csrf_token }}
         <div class="row">
             <div class="col">
@@ -16,7 +16,7 @@
             </div>
         </div>
     </form>
-    {% include 'employee_management/update_employee.html' %}
+    {% include 'user_management/update_user.html' %}
 </div>
 <script>
     var emails = JSON.parse('{{emails | tojson}}');

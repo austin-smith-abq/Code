@@ -1,8 +1,8 @@
 from flask import Flask, render_template, redirect
-from Forms import DocumentForm, EmployeeForm, EmployeeSearchForm
-from Models import Employee
+from Forms import DocumentForm, UserForm, UserSearchForm
+from Models import User
 from flask_bootstrap import Bootstrap
-from database import get_email_autocomplete, search_employee_database
+from database import get_email_autocomplete, search_user_database
 
 
 app = Flask(__name__)
@@ -28,40 +28,44 @@ def create_document():
     )
 
 
-@app.route("/new_employee", methods=["GET", "POST"])
-def new_employee():
-    form = EmployeeForm()
+@app.route("/new_user", methods=["GET", "POST"])
+def new_user():
+    form = UserForm()
     if form.validate_on_submit():
         first_name = form.first_name.data
         last_name = form.last_name.data
-        employee_id = form.employee_id.data
+        user_type = form.user_type.data
+        user_id = form.user_id.data
         division = form.division.data
         title = form.title.data
+        supervisor = form.supervisor.data
 
-        employee = Employee(
+        user = User(
             first_name,
             last_name,
-            employee_id,
+            user_type,
+            user_id,
             division,
             title,
+            supervisor,
         )
-        employee.add()
+        user.add()
 
-        return redirect("/new_employee")
+        return redirect("/new_user")
 
     return render_template(
-        "employee_management/new_employee.html", active="new_employee", form=form
+        "user_management/new_user.html", active="new_user", form=form
     )
 
-@app.route("/search_employee", methods=["GET", "POST"])
-def search_employee():
+@app.route("/search_user", methods=["GET", "POST"])
+def search_user():
     emails = get_email_autocomplete()
-    search_form = EmployeeSearchForm()
-    form = EmployeeForm()
+    search_form = UserSearchForm()
+    form = UserForm()
     if search_form.validate_on_submit():
-        search_employee_database(search_form.email.data)
+        search_user_database(search_form.email.data)
     if form.validate_on_submit():
         print('success')
     return render_template(
-        "employee_management/search_employee.html", active="search_employee", search_form=search_form, form=form, emails=emails,
+        "user_management/search_user.html", active="search_user", search_form=search_form, form=form, emails=emails,
     )

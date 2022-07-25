@@ -1,12 +1,6 @@
-{% extends 'base.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
-{% block content %}
-<header>
-    <h1>{% block title %} New Employee {% endblock %}</h1>
-</header>
 <div class="pt-4">
-    <form id="new_employee" method="POST">
-        {{ form.csrf_token }}
+    <form id="update_user" method="POST">
+        {{ search_form.csrf_token }}
         <div class="row">
             <div class="col">
                 {{ wtf.form_field(form.first_name) }}
@@ -16,7 +10,12 @@
             </div>
         </div>
         <div class="row pt-4">
-            {{ wtf.form_field(form.employee_id) }}
+            <div class="col">
+                {{ wtf.form_field(form.user_type) }}
+            </div>
+            <div class="col">
+                {{ wtf.form_field(form.user_id) }}
+            </div>
         </div>
         <div class="row pt-4">
             <div class="col">
@@ -24,6 +23,9 @@
             </div>
             <div class="col">
                 {{ wtf.form_field(form.title) }}
+            </div>
+            <div class="col">
+                {{ wtf.form_field(form.supervisor) }}
             </div>
         </div>
         <div class="row pt-4">
@@ -37,6 +39,3 @@
     </form>
 
 </div>
-
-
-{% endblock %}

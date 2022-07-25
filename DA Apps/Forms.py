@@ -10,17 +10,20 @@ class DocumentForm(FlaskForm):
     case_number = StringField('Enter a case number', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
-class EmployeeSearchForm(FlaskForm):
+class UserSearchForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     submit = SubmitField('Search')
     
-class EmployeeForm(FlaskForm):
+class UserForm(FlaskForm):
+    user_types = ['Standard', 'Intern', 'Contractor']
     divisions = ['SAKI', 'General Crimes']
     titles = ['Legal Secretary', 'IT Administrator']
     first_name = StringField('First name', validators=[DataRequired()])
     last_name = StringField('Last name', validators=[DataRequired()])
-    employee_id = StringField('Employee ID', validators=[DataRequired()])
+    user_type = SelectField('User Type', choices=user_types, validators=[DataRequired()])
+    user_id = StringField('User ID', validators=[DataRequired()])
     division = SelectField('Division', choices=divisions)
     title = SelectField('Title', choices=titles)
+    supervisor = BooleanField('Is this user a supervisor?')
     submit = SubmitField('Submit')
 
