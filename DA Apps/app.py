@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect
-from Forms import DocumentForm, UserForm, UserSearchForm, ContactForm, GoogleSheetForm
+from Forms import DocumentForm, UserForm, UserSearchForm, ContactForm, ContactSearchForm, GoogleSheetForm
 from Models import User, Contact
 from flask_bootstrap import Bootstrap
 from database import get_email_autocomplete, search_user_database
@@ -57,6 +57,19 @@ def new_contact():
         "contacts/new_contact.html", active="new_contact", form=form
     )
 
+@app.route("/modify_contact", methods=["GET", "POST"])
+def modify_contact():
+    emails = get_email_autocomplete()
+    search_form = ContactSearchForm()
+    form = ContactForm()
+    if search_form.validate_on_submit():
+        form.first_name.data = 'Austin'
+        #search_user_database(search_form.email.data)
+    if form.validate_on_submit():
+        print('success')
+    return render_template(
+        "contacts/modify_contact.html", active="modify_contact", search_form=search_form, form=form, emails=emails,
+    )
 
 @app.route("/new_user", methods=["GET", "POST"])
 def new_user():
@@ -93,7 +106,8 @@ def modify_user():
     search_form = UserSearchForm()
     form = UserForm()
     if search_form.validate_on_submit():
-        search_user_database(search_form.email.data)
+        form.first_name.data = 'Austin'
+        #search_user_database(search_form.email.data)
     if form.validate_on_submit():
         print('success')
     return render_template(

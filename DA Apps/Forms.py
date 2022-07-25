@@ -10,6 +10,10 @@ class DocumentForm(FlaskForm):
     case_number = StringField('Enter a case number', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+class ContactSearchForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired()])
+    search = SubmitField('Search')
+
 class ContactForm(FlaskForm):
     agencies = ["Albuquerque Police Department", "Bernalillo County Sheriff's", "New Mexico State Police"]
     first_name = StringField('First name', validators=[DataRequired()])
