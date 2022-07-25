@@ -1,0 +1,33 @@
+<div class="pt-4">
+    <form id="update_employee" method="POST">
+        {{ search_form.csrf_token }}
+        <div class="row">
+            <div class="col">
+                {{ wtf.form_field(form.first_name) }}
+            </div>
+            <div class="col">
+                {{ wtf.form_field(form.last_name) }}
+            </div>
+        </div>
+        <div class="row pt-4">
+            {{ wtf.form_field(form.employee_id) }}
+        </div>
+        <div class="row pt-4">
+            <div class="col">
+                {{ wtf.form_field(form.division) }}
+            </div>
+            <div class="col">
+                {{ wtf.form_field(form.title) }}
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col">
+                {{ wtf.form_field(form.submit) }}
+            </div>
+            <div class="col">
+                
+            </div>
+        </div>
+    </form>
+
+</div>

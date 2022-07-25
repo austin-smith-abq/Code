@@ -2,3 +2,5 @@
 .mapbox_token
 .opensecret
 .postgres_token
+great_expectations
+Document Generator/postgres_config
