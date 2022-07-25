@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect
-from Forms import DocumentForm, UserForm, UserSearchForm, QuickCheckForm
+from Forms import DocumentForm, UserForm, UserSearchForm, GoogleSheetForm
 from Models import User
 from flask_bootstrap import Bootstrap
 from database import get_email_autocomplete, search_user_database
@@ -72,8 +72,16 @@ def modify_user():
 
 @app.route("/quick_check", methods=["GET", "POST"])
 def quick_check():
-    form = QuickCheckForm()
+    form = GoogleSheetForm()
     if form.validate_on_submit():
         print('success')
     return render_template(
         "quality_control/quick_check.html", active="quick_check", form=form)
+
+@app.route("/case_repair", methods=["GET", "POST"])
+def case_repair():
+    form = GoogleSheetForm()
+    if form.validate_on_submit():
+        print('success')
+    return render_template(
+        "quality_control/case_repair.html", active="case_repair", form=form)
