@@ -5,3 +5,4 @@
 great_expectations
 Document Generator/postgres_config
 DA Apps/postgres_config
+DA Apps/.env

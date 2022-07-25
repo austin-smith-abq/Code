@@ -1,4 +1,6 @@
-import database
+"""Data models."""
+from . import db
+from .Database import *
 from dataclasses import dataclass
 
 
@@ -30,7 +32,8 @@ class User:
             "supervisor": self.supervisor,
             "active": True,
         }
-        database.add(self.database, values)
+        Database.add(self.database, values)
+
 
 @dataclass
 class Contact:
@@ -56,4 +59,18 @@ class Contact:
             "email": self.email,
             "active": True,
         }
-        database.add(self.database, values)
+        Database.add(self.database, values)
+
+
+class Person(db.Model):
+
+    __tablename__ = "person"
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=False, unique=True, nullable=False)
+    email = db.Column(db.String(80), index=True, unique=True, nullable=False)
+    created = db.Column(db.DateTime, index=False, unique=False, nullable=False)
+    bio = db.Column(db.Text, index=False, unique=False, nullable=True)
+    admin = db.Column(db.Boolean, index=False, unique=False, nullable=False)
+
+    def __repr__(self):
+        return "<User {}>".format(self.username)

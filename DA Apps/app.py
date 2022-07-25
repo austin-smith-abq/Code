@@ -1,8 +1,8 @@
 from flask import Flask, render_template, redirect
-from Forms import DocumentForm, UserForm, UserSearchForm, ContactForm, ContactSearchForm, GoogleSheetForm
-from Models import User, Contact
+from .Forms import DocumentForm, UserForm, UserSearchForm, ContactForm, ContactSearchForm, GoogleSheetForm
+from .Models import User, Contact
+from .Database import get_email_autocomplete, search_user_database
 from flask_bootstrap import Bootstrap
-from database import get_email_autocomplete, search_user_database
 
 
 app = Flask(__name__)
