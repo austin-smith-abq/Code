@@ -12,7 +12,7 @@ class DocumentForm(FlaskForm):
 
 class UserSearchForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
-    submit = SubmitField('Search')
+    search = SubmitField('Search')
     
 class UserForm(FlaskForm):
     user_types = ['Standard', 'Intern', 'Contractor']
@@ -26,4 +26,5 @@ class UserForm(FlaskForm):
     title = SelectField('Title', choices=titles)
     supervisor = BooleanField('Is this user a supervisor?')
     submit = SubmitField('Submit')
+    deactivate = SubmitField('Deactivate')
 

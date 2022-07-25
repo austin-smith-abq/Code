@@ -57,8 +57,8 @@ def new_user():
         "user_management/new_user.html", active="new_user", form=form
     )
 
-@app.route("/search_user", methods=["GET", "POST"])
-def search_user():
+@app.route("/modify_user", methods=["GET", "POST"])
+def modify_user():
     emails = get_email_autocomplete()
     search_form = UserSearchForm()
     form = UserForm()
@@ -67,5 +67,5 @@ def search_user():
     if form.validate_on_submit():
         print('success')
     return render_template(
-        "user_management/search_user.html", active="search_user", search_form=search_form, form=form, emails=emails,
+        "user_management/modify_user.html", active="modify_user", search_form=search_form, form=form, emails=emails,
     )

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg py-2 navbar-dark bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">DA2nd Applications</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
@@ -19,7 +19,7 @@
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">User Management</a>
           <div class="dropdown-menu" data-bs-popper="none">
             <a class="dropdown-item {% if active=='new_user' %}active{%endif %}" href="/new_user">New User</a>
-            <a class="dropdown-item {% if active=='search_user' %}active{%endif %}" href="/search_user">Search User</a>
+            <a class="dropdown-item {% if active=='modify_user' %}active{%endif %}" href="/modify_user">Modify User</a>
           </div>
         </li>
       </ul>
