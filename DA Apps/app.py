@@ -85,3 +85,11 @@ def case_repair():
         print('success')
     return render_template(
         "quality_control/case_repair.html", active="case_repair", form=form)
+
+@app.route("/warehouse_log", methods=["GET", "POST"])
+def warehouse_log():
+    form = GoogleSheetForm()
+    if form.validate_on_submit():
+        print('success')
+    return render_template(
+        "quality_control/warehouse_log.html", active="warehouse_log", form=form)
