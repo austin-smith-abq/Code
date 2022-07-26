@@ -1,5 +1,8 @@
-from flask import render_template, redirect
+from flask import render_template, redirect, jsonify, request, url_for
 from flask import current_app as app
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
 from .forms import (
     DocumentForm,
     PleaForm,
@@ -10,6 +13,11 @@ from .forms import (
     GoogleSheetForm,
 )
 from .Person import db, User, Contact
+
+
+admin = Admin(app, template_mode='bootstrap4')
+admin.add_view(ModelView(User,db.session,name="Users"))
+admin.add_view(ModelView(Contact,db.session,name="Contacts"))
 
 @app.route("/")
 def dashboard():
@@ -101,17 +109,19 @@ def new_user():
         division = form.division.data
         title = form.title.data
         supervisor = form.supervisor.data
-        start_date = form.start_date.data
+        #start_date = form.start_date.data
 
         new_user = User(
             first_name=first_name,
             last_name=last_name,
+            email="test.dude@da2nd.state.nm.us",
             user_type=user_type,
             user_id=user_id,
             division=division,
             title=title,
             supervisor=supervisor,
-            start_date=start_date,
+            active=True,
+            #start_date=start_date,
         )
         db.session.add(new_user)
         db.session.commit()
@@ -124,20 +134,26 @@ def new_user():
 
 @app.route("/modify_user", methods=["GET", "POST"])
 def modify_user():
-    emails = get_email_autocomplete()
     search_form = UserSearchForm()
     form = UserForm()
     if search_form.validate_on_submit():
-        form.first_name.data = "Austin"
-        # search_user_database(search_form.email.data)
+        query = db.session.query(User).filter(User.email==search_form.email.data and User.active ==True).first()
+        form.first_name.data = query.first_name
+        form.last_name.data = query.last_name
+        form.user_type.data = query.user_type
+        form.user_id.data = query.user_id
+        form.division.data = query.division
+        form.title.data = query.title
+        form.supervisor.data = query.supervisor
     if form.validate_on_submit():
-        print("success")
+        print('Success!')
+        query.first_name = form.first_name.data
+        db.session.commit()
     return render_template(
         "user_management/modify_user.html",
         active="modify_user",
         search_form=search_form,
         form=form,
-        emails=emails,
     )
 
 
@@ -169,3 +185,11 @@ def warehouse_log():
     return render_template(
         "quality_control/warehouse_log.html", active="warehouse_log", form=form
     )
+
+@app.route('/autocomplete', methods=['GET'])
+def autocomplete():
+    print('detect')
+    search = request.args.get('q')
+    query = db.session.query(User.email).filter(User.email.like('%' + str(search) + '%'))
+    results = [email[0] for email in query.all()]
+    return jsonify(matching_results=results)

@@ -1,6 +1,8 @@
 from flask import Flask
+from flask_admin import Admin
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+
 
 
 db = SQLAlchemy()
@@ -10,6 +12,8 @@ def create_app():
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object('config.Config')
     Bootstrap(app)
+
+    #admin = Admin(app)
 
     db.init_app(app)
 

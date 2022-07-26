@@ -1,6 +1,7 @@
 """Data models."""
 from . import db
 
+
 class Person(db.Model):
     __abstract__ = True
     id = db.Column(
@@ -25,18 +26,18 @@ class Person(db.Model):
         unique=False,
         nullable=False
     )
-    primary_phone = db.Column(
-        db.String(64),
-        index=False,
-        unique=False,
-        nullable=False
-    )
-    cell_phone = db.Column(
-        db.String(64),
-        index=False,
-        unique=False,
-        nullable=False
-    )
+    #primary_phone = db.Column(
+    #    db.String(64),
+    #    index=False,
+    #    unique=False,
+    #    nullable=True
+    #)
+    #cell_phone = db.Column(
+    #    db.String(64),
+    #    index=False,
+    #    unique=False,
+    #    nullable=True
+    #)
     email = db.Column(
         db.String(64),
         index=False,
@@ -82,13 +83,13 @@ class User(Person):
         db.DateTime,
         index=False,
         unique=False,
-        nullable=False
+        nullable=True
     )
     end_date = db.Column(
         db.DateTime,
         index=False,
         unique=False,
-        nullable=False
+        nullable=True
     )
 
 class Contact(Person):
