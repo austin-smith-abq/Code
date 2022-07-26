@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<header>
+    <h1>{% block title %} Plea Approval {% endblock %}</h1>
+</header>
+<div class="container pt-4">
+    <form id="create_document" method="POST">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class="col">
+                {{ wtf.form_field(form.document_group) }}
+            </div>
+            <div class="col">
+                {{ wtf.form_field(form.document_type) }}
+            </div>
+        </div>
+        <div class="row pt-4">
+            {{ wtf.form_field(form.case_number) }}
+        </div>
+        <div class="row pt-4">
+            <div class="col">
+                {{ form.submit(class_="btn btn-success")}}
+            </div>
+            <div class="col">
+                {{ wtf.form_field(form.disable_auto_format) }}
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+{% endblock %}

@@ -13,8 +13,14 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if active=='create_document' %}active{%endif %}" href="/create_document">Doc Gen</a>
+          
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Legal Tools</a>
+          <div class="dropdown-menu" data-bs-popper="none">
+            <a class="dropdown-item {% if active=='create_document' %}active{%endif %}" href="/create_document">Doc Gen</a>
+            <a class="dropdown-item {% if active=='plea_approval' %}active{%endif %}" href="/plea_approval">Plea Approval</a>
+          </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Officer Contact</a>
           <div class="dropdown-menu" data-bs-popper="none">

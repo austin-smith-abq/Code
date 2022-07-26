@@ -1,14 +1,15 @@
-from flask import Flask, render_template, redirect
-from .Forms import DocumentForm, UserForm, UserSearchForm, ContactForm, ContactSearchForm, GoogleSheetForm
-from .Models import User, Contact
-from .Database import get_email_autocomplete, search_user_database
-from flask_bootstrap import Bootstrap
-
-
-app = Flask(__name__)
-app.config["SECRET_KEY"] = "C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb"
-Bootstrap(app)
-
+from flask import render_template, redirect
+from flask import current_app as app
+from .forms import (
+    DocumentForm,
+    PleaForm,
+    UserForm,
+    UserSearchForm,
+    ContactForm,
+    ContactSearchForm,
+    GoogleSheetForm,
+)
+from .Person import db, User, Contact
 
 @app.route("/")
 def dashboard():
@@ -24,8 +25,22 @@ def create_document():
         return redirect("/create_document")
 
     return render_template(
-        "document_generation/create_document.html", active="create_document", form=form
+        "legal_tools/create_document.html", active="create_document", form=form
     )
+
+@app.route("/plea_approval", methods=["GET", "POST"])
+def plea_approval():
+    form = PleaForm()
+    if form.validate_on_submit():
+        case_number = form.case_number.data
+        print(case_number)
+        return redirect("/plea_approval")
+
+    return render_template(
+        "legal_tools/plea_approval.html", active="plea_approval", form=form
+    )
+
+
 @app.route("/new_contact", methods=["GET", "POST"])
 def new_contact():
     form = ContactForm()
@@ -34,22 +49,22 @@ def new_contact():
         last_name = form.last_name.data
         agency = form.agency.data
         badge_id = form.badge_id.data
-        title = form.title.data
         primary_phone = form.primary_phone.data
         cell_phone = form.cell_phone.data
         email = form.email.data
 
-        contact = Contact(
-            first_name,
-            last_name,
-            agency,
-            badge_id,
-            title,
-            primary_phone,
-            cell_phone,
-            email,
+        new_contact = Contact(
+            first_name=first_name,
+            last_name=last_name,
+            agency=agency,
+            badge_id=badge_id,
+            primary_phone=primary_phone,
+            cell_phone=cell_phone,
+            email=email,
+            active=True,
         )
-        contact.add()
+        db.session.add(new_contact)
+        db.session.commit()
 
         return redirect("/new_contact")
 
@@ -59,16 +74,20 @@ def new_contact():
 
 @app.route("/modify_contact", methods=["GET", "POST"])
 def modify_contact():
-    emails = get_email_autocomplete()
+    emails = {'Test1': 'Test1'}
     search_form = ContactSearchForm()
     form = ContactForm()
     if search_form.validate_on_submit():
-        form.first_name.data = 'Austin'
-        #search_user_database(search_form.email.data)
+        form.first_name.data = "Austin"
+        # search_user_database(search_form.email.data)
     if form.validate_on_submit():
-        print('success')
+        print("success")
     return render_template(
-        "contacts/modify_contact.html", active="modify_contact", search_form=search_form, form=form, emails=emails,
+        "contacts/modify_contact.html",
+        active="modify_contact",
+        search_form=search_form,
+        form=form,
+        emails=emails,
     )
 
 @app.route("/new_user", methods=["GET", "POST"])
@@ -82,17 +101,20 @@ def new_user():
         division = form.division.data
         title = form.title.data
         supervisor = form.supervisor.data
+        start_date = form.start_date.data
 
-        user = User(
-            first_name,
-            last_name,
-            user_type,
-            user_id,
-            division,
-            title,
-            supervisor,
+        new_user = User(
+            first_name=first_name,
+            last_name=last_name,
+            user_type=user_type,
+            user_id=user_id,
+            division=division,
+            title=title,
+            supervisor=supervisor,
+            start_date=start_date,
         )
-        user.add()
+        db.session.add(new_user)
+        db.session.commit()
 
         return redirect("/new_user")
 
@@ -106,34 +128,44 @@ def modify_user():
     search_form = UserSearchForm()
     form = UserForm()
     if search_form.validate_on_submit():
-        form.first_name.data = 'Austin'
-        #search_user_database(search_form.email.data)
+        form.first_name.data = "Austin"
+        # search_user_database(search_form.email.data)
     if form.validate_on_submit():
-        print('success')
+        print("success")
     return render_template(
-        "user_management/modify_user.html", active="modify_user", search_form=search_form, form=form, emails=emails,
+        "user_management/modify_user.html",
+        active="modify_user",
+        search_form=search_form,
+        form=form,
+        emails=emails,
     )
+
 
 @app.route("/quick_check", methods=["GET", "POST"])
 def quick_check():
     form = GoogleSheetForm()
     if form.validate_on_submit():
-        print('success')
+        print("success")
     return render_template(
-        "quality_control/quick_check.html", active="quick_check", form=form)
+        "quality_control/quick_check.html", active="quick_check", form=form
+    )
+
 
 @app.route("/case_repair", methods=["GET", "POST"])
 def case_repair():
     form = GoogleSheetForm()
     if form.validate_on_submit():
-        print('success')
+        print("success")
     return render_template(
-        "quality_control/case_repair.html", active="case_repair", form=form)
+        "quality_control/case_repair.html", active="case_repair", form=form
+    )
+
 
 @app.route("/warehouse_log", methods=["GET", "POST"])
 def warehouse_log():
     form = GoogleSheetForm()
     if form.validate_on_submit():
-        print('success')
+        print("success")
     return render_template(
-        "quality_control/warehouse_log.html", active="warehouse_log", form=form)
+        "quality_control/warehouse_log.html", active="warehouse_log", form=form
+    )
