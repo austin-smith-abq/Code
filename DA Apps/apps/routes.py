@@ -12,12 +12,12 @@ from .forms import (
     ContactSearchForm,
     GoogleSheetForm,
 )
-from .Person import db, User, Contact
+from .Person import db, Person, User
+from .Location import db, Location, Room
 
 
 admin = Admin(app, template_mode='bootstrap4')
-admin.add_view(ModelView(User,db.session,name="Users"))
-admin.add_view(ModelView(Contact,db.session,name="Contacts"))
+
 
 @app.route("/")
 def dashboard():
@@ -61,7 +61,7 @@ def new_contact():
         cell_phone = form.cell_phone.data
         email = form.email.data
 
-        new_contact = Contact(
+        new_contact = Person(
             first_name=first_name,
             last_name=last_name,
             agency=agency,

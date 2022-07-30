@@ -3,8 +3,8 @@ from . import db
 
 
 class Person(db.Model):
-    __abstract__ = True
-    id = db.Column(
+    __tablename__ = 'person'
+    person_guid = db.Column(
         db.Integer,
         primary_key=True
     )
@@ -26,39 +26,92 @@ class Person(db.Model):
         unique=False,
         nullable=False
     )
-    #primary_phone = db.Column(
-    #    db.String(64),
-    #    index=False,
-    #    unique=False,
-    #    nullable=True
-    #)
-    #cell_phone = db.Column(
-    #    db.String(64),
-    #    index=False,
-    #    unique=False,
-    #    nullable=True
-    #)
-    email = db.Column(
+    agency = db.Column(
         db.String(64),
         index=False,
         unique=False,
         nullable=False
     )
+    primary_phone = db.Column(
+        db.String(64),
+        index=False,
+        unique=False,
+        nullable=True
+    )
+    cell_phone = db.Column(
+        db.String(64),
+        index=False,
+        unique=False,
+        nullable=True
+    )
+    personal_phone = db.Column(
+        db.String(64),
+        index=False,
+        unique=False,
+        nullable=True
+    )
+    primary_email = db.Column(
+        db.String(64),
+        index=False,
+        unique=False,
+        nullable=True
+    )
+    secondary_email = db.Column(
+        db.String(64),
+        index=False,
+        unique=False,
+        nullable=True
+    )
+    employee_id = db.Column(
+        db.String(64),
+        index=False,
+        unique=False,
+        nullable=True
+    )
+    bar_status = db.Column(
+        db.Boolean,
+        index=False,
+        unique=False,
+        nullable=True
+    )
+    location_guid = db.Column(
+        db.String(64),
+        index=False,
+        unique=False,
+        nullable=True
+    )
+    cms_guid = db.Column(
+        db.String(64),
+        index=False,
+        unique=False,
+        nullable=True
+    )
+    evidence_guid = db.Column(
+        db.String(64),
+        index=False,
+        unique=False,
+        nullable=True
+    )
     
-class User(Person):
-    """Data model for user accounts."""
 
-    __tablename__ = 'users'
+    
+class User(db.Model):
+    """Data model for user accounts."""
+    __tablename__ = 'user'
+    person_guid = db.Column(
+        db.Integer, 
+        primary_key=True
+    )
+    user_guid = db.Column(
+        db.Integer, 
+        index=False,
+        unique=False,
+        nullable=True,
+    )
     user_type = db.Column(
         db.String(64),
         index=False,
         unique=False,
-        nullable=False
-    )
-    user_id = db.Column(
-        db.String(64),
-        index=False,
-        unique=True,
         nullable=False
     )
     division = db.Column(
@@ -69,12 +122,6 @@ class User(Person):
     )
     title = db.Column(
         db.String(64),
-        index=False,
-        unique=False,
-        nullable=False
-    )
-    supervisor = db.Column(
-        db.Boolean,
         index=False,
         unique=False,
         nullable=False
@@ -91,18 +138,35 @@ class User(Person):
         unique=False,
         nullable=True
     )
-
-class Contact(Person):
-    """Data model for office contacts."""
-
-    __tablename__ = 'contacts'
-    agency = db.Column(
-        db.String(64),
+    supervisor_guid = db.Column(
+        db.Integer, 
+        db.ForeignKey('person.person_guid'),
         index=False,
         unique=False,
-        nullable=False
+        nullable=True,
     )
-    badge_id = db.Column(
+    rater_guid = db.Column(
+        db.Integer, 
+        db.ForeignKey('person.person_guid'),
+        index=False,
+        unique=False,
+        nullable=True,
+    )
+    reviewer_guid = db.Column(
+        db.Integer, 
+        db.ForeignKey('person.person_guid'),
+        index=False,
+        unique=False,
+        nullable=True,
+    )
+    room_guid = db.Column(
+        db.Integer, 
+        db.ForeignKey('room.room_guid'),
+        index=False,
+        unique=False,
+        nullable=True,
+    )
+    wasp_guid = db.Column(
         db.String(64),
         index=False,
         unique=False,
