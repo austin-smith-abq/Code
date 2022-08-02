@@ -1,0 +1,1 @@
+postgresql+psycopg2://192.168.168.77/postgres?user=admin&password=Elast1co
