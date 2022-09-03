@@ -2,11 +2,12 @@ from flask import render_template, redirect, jsonify, request, url_for
 from flask import current_app as app
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from sqlalchemy import func
 
 from .forms import (
     CardForm,
 )
-from .Card import db, Card
+from .Card import db, Card, TCG
 
 admin = Admin(app, template_mode='bootstrap4')
 
@@ -28,10 +29,15 @@ def add_card():
         "manage_cards/add_card.html", active="add_card", form=form
     )
 
-@app.route('/autocomplete', methods=['GET'])
+@app.route("/autocomplete", methods=["GET"])
 def autocomplete():
-    print('detect')
-    search = request.args.get('q')
-    query = db.session.query(User.email).filter(User.email.like('%' + str(search) + '%'))
-    results = [email[0] for email in query.all()]
-    return jsonify(matching_results=results)
+    search = request.args.get("q")
+    if len(search) > 4:
+        query = (
+            db.session.query(TCG.cleanname)
+            .filter(func.upper(TCG.cleanname).like(f"%{str(search.upper())}%"))
+            .order_by(TCG.cleanname.asc())
+        )
+
+        results = [field.cleanname for field in query.all()]
+        return jsonify(matching_results=results)
