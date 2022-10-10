@@ -7,7 +7,7 @@ from sqlalchemy import func
 from .forms import (
     CardForm,
 )
-from .Card import db, Card, TCG
+from .Objects import db, Card, TCG
 
 admin = Admin(app, template_mode='bootstrap4')
 
@@ -15,6 +15,7 @@ admin = Admin(app, template_mode='bootstrap4')
 @app.route("/")
 def dashboard():
     return render_template("dashboard.html", active="dashboard")
+
 
 
 @app.route("/add_card", methods=["GET", "POST"])

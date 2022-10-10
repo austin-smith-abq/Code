@@ -9,9 +9,6 @@
         {{ form.csrf_token }}
         <div class="row">
             <div class="col">
-                {{ wtf.form_field(form.deck_name) }}
-            </div>
-            <div class="col">
                 {{ form.card_name(class_="autocomplete form-control") }}
             </div>
             <div class="col">

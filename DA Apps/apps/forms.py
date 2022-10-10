@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, SearchField, URLField, BooleanField, RadioField, DateField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 
-
 class DocumentForm(FlaskForm):
     disable_auto_format = BooleanField('Disable auto-formatting')
     document_group = SelectField('Document group', choices=[1,2,3])

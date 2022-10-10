@@ -186,6 +186,7 @@ def warehouse_log():
         "quality_control/warehouse_log.html", active="warehouse_log", form=form
     )
 
+
 @app.route('/autocomplete', methods=['GET'])
 def autocomplete():
     print('detect')

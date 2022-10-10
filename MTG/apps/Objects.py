@@ -2,14 +2,12 @@
 from . import db
 from sqlalchemy.orm import relationship
 
-
 class Deck(db.Model):
-    __tablename__ = 'decks'
-    children = relationship("Card")
-    id = db.Column(
-        db.Integer,
-        primary_key=True,
-    )
+    __tablename__ = "deck"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    cards = relationship("Card", back_populates="deck")
+
 
 
 class Card(db.Model):
@@ -18,14 +16,14 @@ class Card(db.Model):
         db.Integer,
         primary_key=True,
     )
-    deck_id = db.Column(
-        db.Integer,
-        db.ForeignKey('Deck.id')
-    )
-    tcg_player_id = db.Column(
-        db.Integer,
-        db.ForeignKey('TCG.card_id')
-    )
+    #deck_id = db.Column(
+        #db.Integer,
+        #db.ForeignKey('Deck.id')
+    #)
+    #tcg_player_id = db.Column(
+    #    db.Integer,
+    #    db.ForeignKey('TCG.card_id')
+    #)
     active = db.Column(
         db.Boolean,
         index=False,

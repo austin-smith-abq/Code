@@ -4,6 +4,14 @@ from wtforms.validators import DataRequired
 
 
 class CardForm(FlaskForm):
-    card_name = SearchField('Card name')
+    card_name = SearchField('Card Name', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class DeckForm(FlaskForm):
+    deck_name = StringField('Deck Name', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
+
+
 
